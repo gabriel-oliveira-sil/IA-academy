@@ -33,6 +33,8 @@ def obter_tarefa(id_tarefa):
 @app.route("/tarefas", methods=["POST"])
 def criar_tarefa():
     dados = request.get_json()
+    if not dados or "titulo" not in dados:
+        return jsonify({"erro": "titulo é obrigatório"}), 400
     nova = {"id": tarefas[-1]["id"] + 1, "titulo": dados["titulo"], "feito": False}
     tarefas.append(nova)
     return jsonify(nova), 201
