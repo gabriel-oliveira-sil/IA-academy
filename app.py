@@ -26,7 +26,7 @@ def listar_tarefas():
 @app.route("/tarefas/<int:id_tarefa>")
 def obter_tarefa(id_tarefa):
     tarefa = buscar_tarefa(tarefas, id_tarefa)
-    if tarefa:
+    if not tarefa:
         return jsonify({"erro": "Tarefa não encontrada"}), 404
     return jsonify(tarefa)
 
