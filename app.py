@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -29,6 +29,13 @@ def obter_tarefa(id_tarefa):
     if not tarefa:
         return jsonify({"erro": "Tarefa não encontrada"}), 404
     return jsonify(tarefa)
+
+@app.route("/tarefas", methods=["POST"])
+def criar_tarefa():
+    dados = request.get_json()
+    nova = {"id": tarefas[-1]["id"] + 1, "titulo": dados["titulo"], "feito": False}
+    tarefas.append(nova)
+    return jsonify(nova), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
